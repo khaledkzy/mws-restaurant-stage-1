@@ -78,6 +78,10 @@ section {
     padding: 25px;
     text-align: center;
     text-transform: uppercase;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 
 
@@ -88,7 +92,7 @@ nav {
     height: 80px;
     background-color: #252831;
     text-align: center;
-    display:flex
+    display: flex
 }
 
 nav h1 {
@@ -350,9 +354,4 @@ nav h1 a {
 
 #restaurant-hours td {
     color: #666;
-}
-
-/* MY STYLES  */
-body > header > nav > h1 > a{
-
 }
