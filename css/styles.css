@@ -152,7 +152,7 @@ nav h1 a {
 /* ====================== Map ====================== */
 
 #map {
-    height: 68.5vh;
+    height: 68.921vh;
     width: 100%;
     background-color: #ccc;
 }
@@ -356,4 +356,44 @@ nav h1 a {
 
 #restaurant-hours td {
     color: #666;
+}
+
+
+/* Media Queris */
+
+@media screen and (max-width: 449px) {
+    #footer{
+        font-size: 10px;
+    }
+    .filter-options {
+        flex-direction: column;
+    }
+    #map {
+        height: 53.8vh;
+    }
+    #maincontent>section:nth-child(3)>div>h2 {
+        margin: 15px 0;
+    }
+    #neighborhoods-select {
+        margin: 0;
+    }
+}
+
+@media screen and (min-width: 450px) {
+
+    .filter-options {
+        flex-direction: row;
+    }
+    #map {
+        height: 68.9vh;
+    }
+    #maincontent>section:nth-child(3)>div>h2 {
+        margin: 15px 0;
+    }
+    #neighborhoods-select {
+        margin: 10px;
+    }
+    .filter-options select {
+        width: 32.96vw;
+    }
 }
