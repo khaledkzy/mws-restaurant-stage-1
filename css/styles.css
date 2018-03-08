@@ -112,8 +112,10 @@ nav h1 a {
     list-style: none;
     background-color: #eee;
     font-size: 17px;
-    margin: 0;
     width: calc(50% - 80px);
+    margin:0 auto;
+    display:block;
+    text-align: center;
 }
 
 
@@ -153,6 +155,12 @@ nav h1 a {
 
 #map {
     height: 68.921vh;
+    width: 100%;
+    background-color: #ccc;
+}
+#restaurant-map {
+    /* height: 53.2vh; */
+    height: 58vh;
     width: 100%;
     background-color: #ccc;
 }
@@ -250,12 +258,13 @@ nav h1 a {
 
 /* ====================== Restaurant Details ====================== */
 
-.inside header {
+
+/* .inside header {
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
-}
+} */
 
 
 /* .inside #map-container {
@@ -274,11 +283,12 @@ nav h1 a {
     width: 100%;
 } */
 
-.inside #footer {
+
+/* .inside #footer {
     bottom: 0;
     position: absolute;
     width: 50%;
-}
+} */
 
 #restaurant-name {
     color: #f18200;
@@ -310,20 +320,20 @@ nav h1 a {
     padding: 2px 0;
     text-align: center;
     text-transform: uppercase;
-    width: 90%;
+    width: 100%;
 }
 
-#restaurant-container,
+/* #restaurant-container,
 #reviews-container {
     border-bottom: 1px solid #d9d9d9;
     border-top: 1px solid #fff;
     padding: 140px 40px 30px;
     width: 50%;
-}
+} */
 
-#reviews-container {
+/* #reviews-container {
     padding: 30px 40px 80px;
-}
+} */
 
 #reviews-container h2 {
     color: #f58500;
@@ -337,6 +347,7 @@ nav h1 a {
     margin: 0;
     padding: 0;
 }
+
 
 #reviews-list li {
     background-color: #fff;
@@ -362,7 +373,7 @@ nav h1 a {
 /* Media Queris */
 
 @media screen and (max-width: 449px) {
-    #footer{
+    #footer {
         font-size: 10px;
     }
     .filter-options {
@@ -377,10 +388,18 @@ nav h1 a {
     #neighborhoods-select {
         margin: 0;
     }
+    #restaurant-map {
+        height: 53.2vh;
+    }
+}
+
+@media screen and (min-width: 251px) and (max-width: 449px) {
+    #restaurant-map {
+        height: 55.5vh;
+    }
 }
 
 @media screen and (min-width: 450px) {
-
     .filter-options {
         flex-direction: row;
     }
