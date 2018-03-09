@@ -101,7 +101,6 @@ nav h1 {
 
 nav h1 a {
     color: #fff;
-    font-size: 2.82vh;
     font-weight: 200;
     letter-spacing: 10px;
     text-transform: uppercase;
@@ -391,6 +390,9 @@ nav h1 a {
     #restaurant-map {
         height: 53.2vh;
     }
+    nav h1 a {
+        font-size: 15px;
+    }
 }
 
 @media screen and (min-width: 251px) and (max-width: 449px) {
@@ -414,5 +416,8 @@ nav h1 a {
     }
     .filter-options select {
         width: 32.96vw;
+    }
+    nav h1 a {
+        font-size: 18px;
     }
 }
