@@ -8,7 +8,7 @@ class DBHelper {
    * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
-    const port =1337 // Change this to your server port
+    const port = 1337 // Change this to your server port
     return `http://localhost:${port}/restaurants`;
   }
 
@@ -21,7 +21,12 @@ class DBHelper {
     xhr.onload = () => {
       if (xhr.status === 200) { // Got a success response from server!
         const json = JSON.parse(xhr.responseText);
-        console.log(json)
+        for (var i = 0; i < 10; i++) {
+         // console.log(json[i].photograph)
+         if(json[i].photograph)
+          console.log(json[i].photograph = json[i].photograph + ".jpg")
+          else console.log(json[i].photograph = 10 + ".jpg")
+         }
         const restaurants = json;
         console.log(restaurants)
         callback(null, restaurants);
@@ -164,9 +169,11 @@ class DBHelper {
       title: restaurant.name,
       url: DBHelper.urlForRestaurant(restaurant),
       map: map,
-      animation: google.maps.Animation.DROP}
+      animation: google.maps.Animation.DROP
+    }
     );
     return marker;
   }
 
 }
+ 
