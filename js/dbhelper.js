@@ -23,11 +23,10 @@ class DBHelper {
         const json = JSON.parse(xhr.responseText);
         for (var i = 0; i < 10; i++) {
           if (json[i].photograph)
-            console.log(json[i].photograph = json[i].photograph + ".jpg")
-          else console.log(json[i].photograph = 10 + ".jpg")
+            json[i].photograph = json[i].photograph + ".jpg"
+          else json[i].photograph = 10 + ".jpg"
         }
         const restaurants = json;
-        console.log(restaurants)
         callback(null, restaurants);
       } else { // Oops!. Got an error from server.
         const error = (`Request failed. Returned status of ${xhr.status}`);
