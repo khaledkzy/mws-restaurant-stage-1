@@ -22,11 +22,10 @@ class DBHelper {
       if (xhr.status === 200) { // Got a success response from server!
         const json = JSON.parse(xhr.responseText);
         for (var i = 0; i < 10; i++) {
-         // console.log(json[i].photograph)
-         if(json[i].photograph)
-          console.log(json[i].photograph = json[i].photograph + ".jpg")
+          if (json[i].photograph)
+            console.log(json[i].photograph = json[i].photograph + ".jpg")
           else console.log(json[i].photograph = 10 + ".jpg")
-         }
+        }
         const restaurants = json;
         console.log(restaurants)
         callback(null, restaurants);
@@ -176,4 +175,3 @@ class DBHelper {
   }
 
 }
- 
