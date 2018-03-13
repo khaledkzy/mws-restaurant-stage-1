@@ -205,6 +205,8 @@ if ('serviceWorker' in navigator) {
 
 
 
+
+
 // INDEXDB
 // var db;
 // var newItem = [

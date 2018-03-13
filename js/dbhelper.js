@@ -27,6 +27,13 @@ class DBHelper {
           else json[i].photograph = 10 + ".jpg"
         }
         const restaurants = json;
+        localforage.setItem('somekey', restaurants, function (err, value) {
+          // Do other things once the value has been saved.
+          console.log(value);
+          localforage.getItem('somekey', function (err, value) {
+            console.log('we just read ' + value);
+          });
+        });
         callback(null, restaurants);
       } else { // Oops!. Got an error from server.
         const error = (`Request failed. Returned status of ${xhr.status}`);
@@ -174,3 +181,5 @@ class DBHelper {
   }
 
 }
+
+
