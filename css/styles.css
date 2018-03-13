@@ -263,7 +263,7 @@ nav h1 a {
     right: 0;
     top: 80px;
     width: 100%;
-    margin-top: 117px;
+    margin-top: 109px;
 }
 
 .inside #map {
@@ -371,15 +371,18 @@ nav h1 a {
 
 /* Media Queris */
 
+@media screen and (max-width: 370px){
+    #map {
+        height: 53.8vh;
+    }
+}
+
 @media screen and (max-width: 449px) {
     #footer {
         font-size: 10px;
     }
     .filter-options {
         flex-direction: column;
-    }
-    #map {
-        height: 53.8vh;
     }
     #maincontent>section:nth-child(3)>div>h2 {
         margin: 15px 0;
