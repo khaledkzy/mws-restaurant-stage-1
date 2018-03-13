@@ -372,9 +372,10 @@ nav h1 a {
 /* Media Queris */
 
 @media screen and (max-width: 370px){
-    #map {
-        height: 53.8vh;
-    }
+
+.inside #map-container {
+    margin-top: 139px;
+}
 }
 
 @media screen and (max-width: 449px) {
@@ -469,6 +470,7 @@ nav h1 a {
         font-size: 18px;
     }
 }
+
 
 
 /* FOCUS */
