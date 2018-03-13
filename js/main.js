@@ -186,3 +186,33 @@ if ('serviceWorker' in navigator) {
     console.log("SW has been registered succesfully")
   });
 }
+
+// INDEXDB
+
+document.addEventListener('DOMContentLoaded', function () {
+  var request = window.indexedDB.open("MyTestDatabase", 5);
+  request.onupgradeneeded = function (event) {
+    var db = event.target.result;
+    var objectStore = db.createObjectStore("restaurant-data", { keyPath: "id" });
+  };
+  request.onerror = function (event) {
+    console.log(event)
+  };
+  request.onsuccess = function (event) {
+    console.log(event)
+  }
+}, false);
+setTimeout(function () {
+  var transaction = db.transaction(["restaurant-data"], "readwrite");
+  var store = transaction.objectStore("restaurant-data")
+  var customer = { name: "Khaled" }
+  var request = store.put(customer)
+  request.onerror = function (event){
+    console.log('NOTWORKING')
+  };
+  request.onsuccess = function (event) {
+    console.log("SAVED YAAAAY")
+  }
+}, 5000);
+
+
