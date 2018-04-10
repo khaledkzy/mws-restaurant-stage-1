@@ -20,6 +20,19 @@ window.initMap = () => {
   });
 }
 
+let restaurantAlt = {
+  1: "Restaurant - People eating in a chinese restaurant",
+	2: "Restaurant - A picture of a pizza",
+	3: "Restaurant- A picture of an empty  restaurant",
+	4: "Restaurant - A picture of an outside view of a resturant",
+	5: "Restaurant - A picture of people eating inside a restaurant",
+	6: "Restaurant - A picture of people eating inside a restaurant ",
+	7: "Restaurant - A picture of an outside view of a restaurant called  Supe Riority Burger ",
+	8: "Restaurant - A picture with a restuarant called the Dutch",
+	9: "Restaurant - People eating in a restaurant",
+	10: "Restaurant - A picture with an empty restaurant",
+}
+
 /**
  * Get current restaurant from page URL.
  */
@@ -45,6 +58,28 @@ fetchRestaurantFromURL = (callback) => {
   }
 }
 
+localfetchRestaurantFromURL = (callback) => {
+  if (self.restaurant) { // restaurant already fetched!
+    callback(null, self.restaurant)
+    return;
+  }
+  const id = getParameterByName('id');
+  if (!id) { // no id found in URL
+    error = 'No restaurant id in URL'
+    callback(error, null);
+  } else {
+    DBHelper.localfetchRestaurantById(id, (error, restaurant) => {
+      self.restaurant = restaurant;
+      if (!restaurant) {
+        console.error(error);
+        return;
+      }
+      fillRestaurantHTML();
+      callback(null, restaurant)
+    });
+  }
+}
+
 /**
  * Create restaurant HTML and add it to the webpage
  */
@@ -58,7 +93,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  image.alt = restaurant.alt;
+  image.alt = restaurantAlt[restaurant.id];
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
