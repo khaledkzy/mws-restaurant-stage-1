@@ -5,42 +5,35 @@ class DBHelper {
 
   /**
    * Database URL.
-   * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
-    const port = 1337 // Change this to your server port
-    return `http://localhost:${port}/restaurants`;
+    return `http://localhost:1337/restaurants`;
   }
 
   /**
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', DBHelper.DATABASE_URL);
-    xhr.onload = () => {
-      if (xhr.status === 200) { // Got a success response from server!
-        const json = JSON.parse(xhr.responseText);
-        for (var i = 0; i < 10; i++) {
-          if (json[i].photograph)
-            json[i].photograph = json[i].photograph + ".jpg"
-          else json[i].photograph = 10 + ".jpg"
-        }
-        const restaurants = json;
-        localforage.setItem('somekey', restaurants, function (err, value) {
-          // Do other things once the value has been saved.
-          console.log(value);
-          localforage.getItem('somekey', function (err, value) {
-            console.log('we just read ' + value);
-          });
-        });
-        callback(null, restaurants);
-      } else { // Oops!. Got an error from server.
-        const error = (`Request failed. Returned status of ${xhr.status}`);
-        callback(error, null);
+    return DBHelper.localGetRestaurants().then(response => {
+      if (response) {
+        DBHelper.getRestaurants()
+        return callback(null, response)
       }
-    };
-    xhr.send();
+      return DBHelper.getRestaurants(callback)
+    })
+  }
+  static cacheRestaurants(restaurants) {
+    return localforage.setItem('restaurants', restaurants)
+  }
+  static localGetRestaurants(callback) {
+    return localforage.getItem('restaurants')
+  }
+  static getRestaurants(callback = () => null) {
+    return fetch(DBHelper.DATABASE_URL).then(res => res.json())
+      .then(json => {
+        DBHelper.cacheRestaurants(json)
+        return callback(null, json)
+      })
   }
 
   /**
@@ -155,14 +148,14 @@ class DBHelper {
    * Restaurant page URL.
    */
   static urlForRestaurant(restaurant) {
-    return (`./restaurant.html?id=${restaurant.id}`);
+    return ('./restaurant.html?id='+restaurant.id);
   }
 
   /**
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.photograph}`);
+    return ('/img/'+restaurant.id+'.jpg');
   }
 
   /**
@@ -181,5 +174,4 @@ class DBHelper {
   }
 
 }
-
 
