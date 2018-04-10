@@ -12,11 +12,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
   fetchCuisines();
 });
 
+
+
 /**
  * Fetch all neighborhoods and set their HTML.
  */
 fetchNeighborhoods = () => {
   DBHelper.fetchNeighborhoods((error, neighborhoods) => {
+    if (error) { // Got an error
+      console.error(error);
+    } else {
+      self.neighborhoods = neighborhoods;
+      fillNeighborhoodsHTML();
+    }
+  });
+}
+localfetchNeighborhoods = () => {
+  DBHelper.localfetchNeighborhoods((error, neighborhoods) => {
     if (error) { // Got an error
       console.error(error);
     } else {
@@ -53,12 +65,13 @@ fetchCuisines = () => {
   });
 }
 
+
+
 /**
  * Set cuisines HTML.
  */
 fillCuisinesHTML = (cuisines = self.cuisines) => {
   const select = document.getElementById('cuisines-select');
-
   cuisines.forEach(cuisine => {
     const option = document.createElement('option');
     option.innerHTML = cuisine;
@@ -186,25 +199,6 @@ if ('serviceWorker' in navigator) {
     console.log("SW has been registered succesfully")
   });
 }
-
-// Using Localforage
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // INDEXDB
