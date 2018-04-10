@@ -4,6 +4,19 @@ let restaurants,
 var map
 var markers = []
 
+let restaurantAlt = {
+  1: "Restaurant - People eating in a chinese restaurant",
+	2: "Restaurant - A picture of a pizza",
+	3: "Restaurant- A picture of an empty  restaurant",
+	4: "Restaurant - A picture of an outside view of a resturant",
+	5: "Restaurant - A picture of people eating inside a restaurant",
+	6: "Restaurant - A picture of people eating inside a restaurant ",
+	7: "Restaurant - A picture of an outside view of a restaurant called  Supe Riority Burger ",
+	8: "Restaurant - A picture with a restuarant called the Dutch",
+	9: "Restaurant - People eating in a restaurant",
+	10: "Restaurant - A picture with an empty restaurant",
+}
+
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
@@ -154,7 +167,7 @@ createRestaurantHTML = (restaurant) => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  image.alt = restaurant.alt;
+  image.alt = restaurantAlt[restaurant.id];
   li.append(image);
 
   const name = document.createElement('h2');
