@@ -7,6 +7,8 @@ var filesToCache = [
     'js/dbhelper.js',
     'js/restaurant_info.js',
     'restaurant.html',
+    'js/localforage.min.js',
+    'manifest.js'
 ];
 
 self.addEventListener('install', function (e) {

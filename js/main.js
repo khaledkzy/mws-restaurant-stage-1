@@ -4,6 +4,19 @@ let restaurants,
 var map
 var markers = []
 
+let restaurantAlt = {
+  1: "Restaurant - People eating in a chinese restaurant",
+	2: "Restaurant - A picture of a pizza",
+	3: "Restaurant- A picture of an empty  restaurant",
+	4: "Restaurant - A picture of an outside view of a resturant",
+	5: "Restaurant - A picture of people eating inside a restaurant",
+	6: "Restaurant - A picture of people eating inside a restaurant ",
+	7: "Restaurant - A picture of an outside view of a restaurant called  Supe Riority Burger ",
+	8: "Restaurant - A picture with a restuarant called the Dutch",
+	9: "Restaurant - People eating in a restaurant",
+	10: "Restaurant - A picture with an empty restaurant",
+}
+
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
@@ -12,11 +25,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
   fetchCuisines();
 });
 
+
+
 /**
  * Fetch all neighborhoods and set their HTML.
  */
 fetchNeighborhoods = () => {
   DBHelper.fetchNeighborhoods((error, neighborhoods) => {
+    if (error) { // Got an error
+      console.error(error);
+    } else {
+      self.neighborhoods = neighborhoods;
+      fillNeighborhoodsHTML();
+    }
+  });
+}
+localfetchNeighborhoods = () => {
+  DBHelper.localfetchNeighborhoods((error, neighborhoods) => {
     if (error) { // Got an error
       console.error(error);
     } else {
@@ -53,12 +78,13 @@ fetchCuisines = () => {
   });
 }
 
+
+
 /**
  * Set cuisines HTML.
  */
 fillCuisinesHTML = (cuisines = self.cuisines) => {
   const select = document.getElementById('cuisines-select');
-
   cuisines.forEach(cuisine => {
     const option = document.createElement('option');
     option.innerHTML = cuisine;
@@ -141,7 +167,7 @@ createRestaurantHTML = (restaurant) => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  image.alt = restaurant.alt;
+  image.alt = restaurantAlt[restaurant.id];
   li.append(image);
 
   const name = document.createElement('h2');
@@ -186,3 +212,51 @@ if ('serviceWorker' in navigator) {
     console.log("SW has been registered succesfully")
   });
 }
+
+
+// INDEXDB
+// var db;
+// var newItem = [
+//   { taskTitle: "", hours: 0, minutes: 0, day: 0, month: "", year: 0, notified: "no" }]
+
+// document.addEventListener('DOMContentLoaded', function () {
+//   var request = window.indexedDB.open("MyTestDatabase", 5);
+//   request.onupgradeneeded = function (event) {
+//     var db = event.target.result;
+//     var objectStore = db.createObjectStore("restaurant-data", { keyPath: "id" });
+//     objectStore.createIndex("hours", "hours", { unique: false });
+//     objectStore.createIndex("minutes", "minutes", { unique: false });
+//     objectStore.createIndex("day", "day", { unique: false });
+//     objectStore.createIndex("month", "month", { unique: false });
+//     objectStore.createIndex("year", "year", { unique: false });
+//     objectStore.createIndex("notified", "notified", { unique: false });
+//   };
+//   request.onerror = function (event) {
+//     console.log(event)
+//   };
+//   request.onsuccess = function (event) {
+//     console.log(event)
+//   }
+// }, false);
+// setTimeout(function () {
+//   var newItem = [
+//     { taskTitle: "title.value", hours: "hours.value", minutes: "minutes.value", day: "day.value", month: "month.value", year: "year.value", notified: "no" }
+//   ];
+//   var transaction = db.transaction(["restaurant-data"], "readwrite");
+//   transaction.oncomplete = function(event) {
+//   console.log("khaled");
+//   };
+//   var store = transaction.objectStore("restaurant-data")
+//   var customer = { name: "Khaled" }
+//   var request = store.put(customer)
+//   var objectStoreRequest = objectStore.add(newItem[0]);
+//   objectStoreRequest.onsuccess = function (event) {console.log("it is working")}
+//   request.onerror = function (event) {
+//     console.log('NOTWORKING')
+//   };
+//   request.onsuccess = function (event) {
+//     console.log("SAVED YAAAAY")
+//   }
+// }, 5000);
+
+
