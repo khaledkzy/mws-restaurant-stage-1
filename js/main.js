@@ -4,6 +4,7 @@ let restaurants,
 var map
 var markers = []
 
+
 let restaurantAlt = {
   1: "Restaurant - People eating in a chinese restaurant",
 	2: "Restaurant - A picture of a pizza",
@@ -23,6 +24,7 @@ let restaurantAlt = {
 document.addEventListener('DOMContentLoaded', (event) => {
   fetchNeighborhoods();
   fetchCuisines();
+  DBHelper.initServiceWorker()
 });
 
 
@@ -204,59 +206,5 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     self.markers.push(marker);
   });
 }
-
-// Regestering the service worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/service-worker.js');
-    console.log("SW has been registered succesfully")
-  });
-}
-
-
-// INDEXDB
-// var db;
-// var newItem = [
-//   { taskTitle: "", hours: 0, minutes: 0, day: 0, month: "", year: 0, notified: "no" }]
-
-// document.addEventListener('DOMContentLoaded', function () {
-//   var request = window.indexedDB.open("MyTestDatabase", 5);
-//   request.onupgradeneeded = function (event) {
-//     var db = event.target.result;
-//     var objectStore = db.createObjectStore("restaurant-data", { keyPath: "id" });
-//     objectStore.createIndex("hours", "hours", { unique: false });
-//     objectStore.createIndex("minutes", "minutes", { unique: false });
-//     objectStore.createIndex("day", "day", { unique: false });
-//     objectStore.createIndex("month", "month", { unique: false });
-//     objectStore.createIndex("year", "year", { unique: false });
-//     objectStore.createIndex("notified", "notified", { unique: false });
-//   };
-//   request.onerror = function (event) {
-//     console.log(event)
-//   };
-//   request.onsuccess = function (event) {
-//     console.log(event)
-//   }
-// }, false);
-// setTimeout(function () {
-//   var newItem = [
-//     { taskTitle: "title.value", hours: "hours.value", minutes: "minutes.value", day: "day.value", month: "month.value", year: "year.value", notified: "no" }
-//   ];
-//   var transaction = db.transaction(["restaurant-data"], "readwrite");
-//   transaction.oncomplete = function(event) {
-//   console.log("khaled");
-//   };
-//   var store = transaction.objectStore("restaurant-data")
-//   var customer = { name: "Khaled" }
-//   var request = store.put(customer)
-//   var objectStoreRequest = objectStore.add(newItem[0]);
-//   objectStoreRequest.onsuccess = function (event) {console.log("it is working")}
-//   request.onerror = function (event) {
-//     console.log('NOTWORKING')
-//   };
-//   request.onsuccess = function (event) {
-//     console.log("SAVED YAAAAY")
-//   }
-// }, 5000);
 
 

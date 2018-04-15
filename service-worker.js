@@ -8,7 +8,8 @@ var filesToCache = [
     'js/restaurant_info.js',
     'restaurant.html',
     'js/localforage.min.js',
-    'manifest.json'
+    'manifest.json',
+    'js/main.js',
 ];
 
 self.addEventListener('install', function (e) {

@@ -7,14 +7,14 @@
     "background_color": "#ffffff",
     "icons": [
         {
-        "src": "./ico/restaurant.png",
-        "sizes": "192x192",
-        "type": "image/png"
+            "src": "./ico/restaurant.png",
+            "sizes": "192x192",
+            "type": "image/png"
         },
         {
             "src": "./ico/restaurant-1.png",
-            "sizes": "192x192",
+            "sizes": "512x512",
             "type": "image/png"
-            }
+        }
     ]
 }

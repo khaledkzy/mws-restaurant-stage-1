@@ -148,14 +148,14 @@ class DBHelper {
    * Restaurant page URL.
    */
   static urlForRestaurant(restaurant) {
-    return ('./restaurant.html?id='+restaurant.id);
+    return ('./restaurant.html?id=' + restaurant.id);
   }
 
   /**
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    return ('/img/'+restaurant.id+'.jpg');
+    return ('/img/' + restaurant.id + '.jpg');
   }
 
   /**
@@ -172,6 +172,19 @@ class DBHelper {
     );
     return marker;
   }
+
+
+  // Regestering the service worker
+
+  static initServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/service-worker.js');
+        console.log("SW has been registered succesfully")
+      });
+    }
+  }
+
 
 }
 

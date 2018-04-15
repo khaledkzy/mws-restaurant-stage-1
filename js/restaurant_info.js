@@ -58,6 +58,11 @@ fetchRestaurantFromURL = (callback) => {
   }
 }
 
+
+(function(){
+  DBHelper.initServiceWorker()
+})()
+
 localfetchRestaurantFromURL = (callback) => {
   if (self.restaurant) { // restaurant already fetched!
     callback(null, self.restaurant)
