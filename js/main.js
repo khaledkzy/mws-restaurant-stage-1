@@ -190,9 +190,40 @@ createRestaurantHTML = (restaurant) => {
   more.href = DBHelper.urlForRestaurant(restaurant);
   li.append(more)
 
+  const fav = document.createElement('button');
+  fav.setAttribute('restaurantID', restaurant.id);
+  fav.setAttribute('class', 'fav-button');
+  setState(fav, restaurant);
+  fav.onclick = function() { addFavorite(fav); }
+  li.append(fav);
+
+
   return li
 }
 
+
+function setState(button, restaurant) {
+  button.setAttribute('data-fav', restaurant.is_favorite);
+  if(restaurant.is_favorite === 'true') {
+      button.innerHTML = 'favorite';
+  } else {
+      button.innerHTML = 'unfavorite';
+  }
+}
+
+
+function addFavorite(button) {
+  const id = button.getAttribute('restaurantID');
+  const favNew = button.getAttribute('data-fav') != "true";
+
+  fetch(`http://localhost:1337/restaurants/${id}/?is_favorite=${favNew}`, { method: 'PUT' })
+      .then(function(res) {
+          return res.json();
+      })
+      .then(function(res) {
+          setState(button, res);
+      })
+}
 /**
  * Add markers for current restaurants to the map.
  */
@@ -206,5 +237,7 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     self.markers.push(marker);
   });
 }
+
+
 
 
