@@ -108,7 +108,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
     fillRestaurantHoursHTML();
   }
   // fill reviews
-  fillReviewsHTML();
+  DBHelper.getReviewsForRestaurant(restaurant.id, fillReviewsHTML);
 }
 
 /**
@@ -130,27 +130,28 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
     hours.appendChild(row);
   }
 }
-
+appendReview = review => {
+  const ul = document.getElementById('reviews-list');
+  ul.appendChild(createReviewHTML(review));
+}
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+fillReviewsHTML = (error,reviews) => {
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h3');
   title.tabIndex = 0;
   title.innerHTML = 'Reviews';
   container.appendChild(title);
 
-  if (!reviews) {
+  if (reviews.length===0) {
     const noReviews = document.createElement('p');
     noReviews.innerHTML = 'No reviews yet!';
     container.appendChild(noReviews);
     return;
   }
   const ul = document.getElementById('reviews-list');
-  reviews.forEach(review => {
-    ul.appendChild(createReviewHTML(review));
-  });
+  reviews.forEach(appendReview);
   container.appendChild(ul);
 }
 
@@ -163,10 +164,6 @@ createReviewHTML = (review) => {
   name.innerHTML = review.name;
   li.appendChild(name);
 
-  const date = document.createElement('p');
-  date.innerHTML = review.date;
-  li.appendChild(date);
-
   const rating = document.createElement('p');
   rating.innerHTML = `Rating: ${review.rating}`;
   li.appendChild(rating);
@@ -177,6 +174,7 @@ createReviewHTML = (review) => {
 
   return li;
 }
+
 
 
 
@@ -205,3 +203,30 @@ getParameterByName = (name, url) => {
     return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
+
+addReviewFormListener = () => {
+  const form = document.querySelector('#review-form');
+  form.addEventListener('submit', event => {
+    event.preventDefault()
+    const name = form.querySelector('#name')
+    const rating = form.querySelector('#rating')
+    const comments = form.querySelector('#comments')
+
+    const review = {
+      restaurant_id: getParameterByName('id'),
+      name: name.value,
+      rating: parseInt(rating.value),
+      comments: comments.value
+    }
+
+    appendReview({...review, updatedAt: new Date() });
+    DBHelper.submitOrSyncReview(review);
+    DBHelper.saveSingleReviewForRestaurant(review);
+
+    name.value = ''
+    rating.value = 1
+    comments.value = ''
+  })
+}
+
+addReviewFormListener();

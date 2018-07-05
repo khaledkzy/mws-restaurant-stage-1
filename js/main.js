@@ -191,6 +191,7 @@ createRestaurantHTML = (restaurant) => {
   li.append(more)
 
   const fav = document.createElement('button');
+
   fav.setAttribute('restaurantID', restaurant.id);
   fav.setAttribute('class', 'fav-button');
   setState(fav, restaurant);

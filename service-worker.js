@@ -32,7 +32,14 @@ self.addEventListener('activate', function (e) {
     );
     return self.clients.claim();
 });
-
+self.addEventListener('sync', event => {
+    if (event.tag === 'sync-reviews') {
+        console.log('SYNCING REVIEWS')
+        event.waitUntil(
+            broadcast({ action: 'send-reviews' })
+        )
+    }
+})
 self.addEventListener('fetch', function (e) {
     if (e.pathname === '/') {
         e.respondWith(

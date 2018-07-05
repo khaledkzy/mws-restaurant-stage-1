@@ -7,7 +7,15 @@ class DBHelper {
    * Database URL.
    */
   static get DATABASE_URL() {
+    return `http://localhost:1337`;
+  }
+
+  static get RESTAURANTS_URL() {
     return `http://localhost:1337/restaurants`;
+  }
+
+  static get REVIEWS_URL() {
+    return `http://localhost:1337/reviews`;
   }
 
   /**
@@ -29,7 +37,7 @@ class DBHelper {
     return localforage.getItem('restaurants')
   }
   static getRestaurants(callback = () => null) {
-    return fetch(DBHelper.DATABASE_URL).then(res => res.json())
+    return fetch(DBHelper.RESTAURANTS_URL).then(res => res.json())
       .then(json => {
         DBHelper.cacheRestaurants(json)
         return callback(null, json)
@@ -174,12 +182,106 @@ class DBHelper {
   }
 
 
+  static getReviewsForRestaurant(restaurantId, callback) {
+    this.getReviewsForRestaurantLocally(restaurantId)
+      .then(response => {
+        if (response) {
+          DBHelper.getReviewsForRestaurantRemotely(restaurantId)
+          return callback(null, response)
+        }
+        return DBHelper.getReviewsForRestaurantRemotely(
+          restaurantId,
+          callback
+        )
+      })
+
+  }
+
+  static saveReviewsForRestaurant(restaurantId, reviews) {
+    return localforage.setItem(
+      `reviewsForRestaurant${restaurantId}`,
+      reviews
+    )
+  }
+
+  static saveSingleReviewForRestaurant(review) {
+    const key =
+      this.getReviewsForRestaurantLocally(review.restaurant_id)
+        .then(reviews => {
+          localforage.setItem(
+            `reviewsForRestaurant${review.restaurant_id}`,
+            [...reviews, { ...review, updatedAt: new Date() }]
+          )
+        })
+  }
+
+  static getReviewsForRestaurantLocally(restaurantId) {
+    return localforage.getItem(`reviewsForRestaurant${restaurantId}`)
+  }
+
+  static getReviewsForRestaurantRemotely(restaurantId, callback = () => null) {
+    return fetch(`${this.REVIEWS_URL}/?restaurant_id=${restaurantId}`)
+      .then(data => data.json())
+      .then(reviews => {
+        this.saveReviewsForRestaurant(restaurantId, reviews)
+        callback(null, reviews)
+      })
+      .catch(error => callback(error, null))
+  }
+  static submitOrSyncReview(review) {
+    this.submitRestaurantReview(review)
+      .catch(() => this.sendReviewSyncRequest(review))
+  }
+
+  static submitRestaurantReview(review) {
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(review)
+    }
+    return fetch(this.REVIEWS_URL, options)
+  }
+  static sendReviewSyncRequest(review) {
+    if (navigator.serviceWorker) {
+      console.log('REQUESTING REVIEW SYNC')
+      this.storeReview(review)
+      navigator.serviceWorker.ready
+        .then(reg => reg.sync.register('syncReviews'))
+    }
+  }
+
+  static storeReview(review) {
+    console.log('STORING REVIEW')
+    localforage.getItem('reviewsToSend')
+      .then(response => {
+        const reviews = response || []
+        localforage.setItem('reviewsToSend', [...reviews, review])
+      })
+  }
+
+  static sendStoredReviews() {
+    console.log('SENDING REVIEWS')
+    localforage.getItem('reviewsToSend')
+      .then(response => {
+        const reviews = response || []
+        console.log('REVIEWS: ', reviews)
+        for (const review of reviews) {
+          this.submitRestaurantReview(review)
+        }
+        localforage.setItem('reviewsToSend', [])
+      })
+  }
+
   // Regestering the service worker
 
   static initServiceWorker() {
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function () {
-        navigator.serviceWorker.register('/service-worker.js');
+        navigator.serviceWorker.register('/service-worker.js').then(() => {
+          navigator.serviceWorker.addEventListener('message', message => {
+            message.data.action === 'postReviews' &&
+              DBHelper.sendStoredReviews()
+          })
+        })
         console.log("SW has been registered succesfully")
       });
     }
