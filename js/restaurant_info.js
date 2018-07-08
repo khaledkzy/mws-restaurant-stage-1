@@ -18,7 +18,7 @@ window.initMap = () => {
     }
   });
 }
-let restaurantAlt = {
+const restaurantAlt = {
   1: "Restaurant - People eating in a chinese restaurant",
   2: "Restaurant - A picture of a pizza",
   3: "Restaurant- A picture of an empty  restaurant",
