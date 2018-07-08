@@ -19,6 +19,7 @@ const restaurantAlt = {
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
+  // updateRestaurants();
   fetchNeighborhoods();
   fetchCuisines();
   DBHelper.initServiceWorker()
@@ -148,8 +149,9 @@ createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.dataset.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.alt = restaurantAlt[restaurant.id];
+  lazyBackgroundObserver.observe(image)
   li.append(image);
   const name = document.createElement('h2');
   name.tabIndex = 0;
@@ -213,4 +215,13 @@ addMarkersToMap = (restaurants = self.restaurants) => {
 
 
 
+
+  let lazyBackgroundObserver = new IntersectionObserver(function(images) {
+    images.forEach(function(image) {
+      if (!image.isIntersecting) return;
+      image.target.src = image.target.dataset.src
+      lazyBackgroundObserver.unobserve(image.target);
+
+    });
+  });
 
