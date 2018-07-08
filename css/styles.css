@@ -339,7 +339,7 @@ nav h1 a {
     margin-top: 10px;
     text-align: center;
     padding: 4px;
-    font-size: 4vh;
+    font-size: 4vw;
 }
 
 
@@ -510,7 +510,7 @@ nav h1 a {
         margin-top: 10px;
         text-align: center;
         padding: 4px;
-        font-size: 4vh;
+        font-size: 14px;
     }
     #reviews-container>h3 {
         font-size: 25px;
