@@ -141,9 +141,13 @@ nav h1 a {
 /* ====================== Map ====================== */
 
 #map {
-    height: 68.921vh;
     width: 100%;
+    height: 0px;
     background-color: #ccc;
+}
+
+#map.show {
+    height: 400px;
 }
 
 /* ====================== Restaurant Filtering ====================== */
@@ -335,6 +339,18 @@ nav h1 a {
     text-align: center;
 }
 
+#showMap {
+    background-color: orange;
+    border: none;
+    color: #fff;
+    display: inline-block;
+    font-size: 10pt;
+    padding: 0px 7px 0px;
+    text-align: center;
+    text-decoration: none;
+    padding: 5px;
+}
+
 #reviews-list li p {
     margin-top: 10px;
     text-align: center;
@@ -342,8 +358,7 @@ nav h1 a {
     font-size: 12px;
 }
 
-
-.fav-button{
+.fav-button {
     background-color: orange;
     border-bottom: 3px solid #eee;
     color: #fff;
@@ -463,9 +478,6 @@ nav h1 a {
 @media screen and (min-width: 450px) {
     .filter-options {
         flex-direction: row;
-    }
-    #map {
-        height: 68.9vh;
     }
     #maincontent>section:nth-child(3)>div>h2 {
         margin: 15px 0;

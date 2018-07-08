@@ -23,6 +23,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
   fetchNeighborhoods();
   fetchCuisines();
   DBHelper.initServiceWorker()
+  updateRestaurants();
+  const showMap = document.getElementById('showMap');
+  showMap.addEventListener('click', initMap);
 });
 /**
  * Fetch all neighborhoods and set their HTML.
@@ -98,6 +101,11 @@ window.initMap = () => {
     scrollwheel: false
   });
   updateRestaurants();
+  let googleMap = document.querySelector('#map');
+  let showMap = document.querySelector('#showMap');
+  googleMap.classList.add('show')
+  showMap.remove()
+
 }
 /**
  * Update page and map for current restaurants.
@@ -190,7 +198,6 @@ function setState(button, restaurant) {
 function addFavorite(button) {
   const id = button.getAttribute('restaurantID');
   const favNew = button.getAttribute('data-fav') != "true";
-
   fetch(`http://localhost:1337/restaurants/${id}/?is_favorite=${favNew}`, { method: 'PUT' })
     .then(function (res) {
       return res.json();
@@ -213,15 +220,11 @@ addMarkersToMap = (restaurants = self.restaurants) => {
   });
 }
 
-
-
-
   let lazyBackgroundObserver = new IntersectionObserver(function(images) {
     images.forEach(function(image) {
       if (!image.isIntersecting) return;
       image.target.src = image.target.dataset.src
       lazyBackgroundObserver.unobserve(image.target);
-
     });
   });
 
