@@ -204,7 +204,7 @@ class DBHelper {
     )
   }
 
-  static saveSingleReviewForRestaurant(review) {
+  static saveOneReview(review) {
     const key =
       this.getReviewsForRestaurantLocally(review.restaurant_id)
         .then(reviews => {

@@ -321,8 +321,10 @@ nav h1 a {
 }
 
 #reviews-list li {
-    background-color: #fff;
-    border: 2px solid #f3f3f3;
+    background-color: rgb(255, 211, 161);
+    border-radius: 40px 0px 40px 0px;
+    -moz-border-radius: 40px 0px 40px 0px;
+    -webkit-border-radius: 40px 0px 40px 0px;
     display: block;
     list-style-type: none;
     overflow: hidden;
@@ -334,10 +336,10 @@ nav h1 a {
 }
 
 #reviews-list li p {
-    margin: 0 auto;
+    margin-top: 10px;
     text-align: center;
     padding: 4px;
-    font-size: 12px;
+    font-size: 4vh;
 }
 
 #reviews-container>h3 {
@@ -364,7 +366,6 @@ nav h1 a {
     max-width: 400px;
     border: solid 2px rgba(255, 0, 0, 0.514);
     border-radius: 5px;
-
 }
 
 #submit-button {
@@ -372,20 +373,28 @@ nav h1 a {
     padding: 10px 10px;
     background: #ffffff00;
     color: rgb(0, 0, 0);
-    border:  solid black 1px;
+    border: solid black 1px;
     border-radius: 5px;
-  }
+}
 
 #rating {
     font-size: 14px;
     background: rgb(247, 220, 220);
-    color:  rgb(122, 58, 5);
+    color: rgb(122, 58, 5);
     margin: 20px auto;
-  }
+}
+
+.reviewName {
+    color: rgb(110, 9, 9);
+    border: solid black 1px;
+    display: inline-block;
+    padding: 10px 14px;
+    font-size: 20vw;
+}
 
 #review-form {
     flex-direction: column;
-    background-color: rgb(255, 180, 95);
+    background-color: rgb(253, 214, 168);
     border-radius: 0px 40px 0px 40px;
     -moz-border-radius: 0px 40px 0px 40px;
     -webkit-border-radius: 0px 40px 0px 40px;
@@ -485,10 +494,10 @@ nav h1 a {
         text-transform: uppercase;
     }
     #reviews-list li p {
-        margin: 0 auto;
+        margin-top: 10px;
         text-align: center;
         padding: 4px;
-        font-size: 16px;
+        font-size: 4vh;
     }
     #reviews-container>h3 {
         font-size: 25px;

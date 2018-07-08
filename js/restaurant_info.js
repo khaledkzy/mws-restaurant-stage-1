@@ -161,6 +161,7 @@ fillReviewsHTML = (error,reviews) => {
 createReviewHTML = (review) => {
   const li = document.createElement('li');
   const name = document.createElement('p');
+  name.className = "reviewName"
   name.innerHTML = review.name;
   li.appendChild(name);
 
@@ -221,7 +222,7 @@ addReviewFormListener = () => {
 
     appendReview({...review, updatedAt: new Date() });
     DBHelper.submitOrSyncReview(review);
-    DBHelper.saveSingleReviewForRestaurant(review);
+    DBHelper.saveOneReview(review);
 
     name.value = ''
     rating.value = 1
