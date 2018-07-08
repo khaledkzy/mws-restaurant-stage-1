@@ -242,7 +242,6 @@ class DBHelper {
   }
   static sendReviewSyncRequest(review) {
     if (navigator.serviceWorker) {
-      console.log('REQUESTING REVIEW SYNC')
       this.storeReview(review)
       navigator.serviceWorker.ready
         .then(reg => reg.sync.register('syncReviews'))
@@ -250,7 +249,6 @@ class DBHelper {
   }
 
   static storeReview(review) {
-    console.log('STORING REVIEW')
     localforage.getItem('reviewsToSend')
       .then(response => {
         const reviews = response || []
@@ -259,11 +257,9 @@ class DBHelper {
   }
 
   static sendStoredReviews() {
-    console.log('SENDING REVIEWS')
     localforage.getItem('reviewsToSend')
       .then(response => {
         const reviews = response || []
-        console.log('REVIEWS: ', reviews)
         for (const review of reviews) {
           this.submitRestaurantReview(review)
         }
@@ -282,7 +278,7 @@ class DBHelper {
               DBHelper.sendStoredReviews()
           })
         })
-        console.log("SW has been registered succesfully")
+        console.log("SW has been registered")
       });
     }
   }
