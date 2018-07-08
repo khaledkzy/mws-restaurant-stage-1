@@ -228,7 +228,7 @@ nav h1 a {
     color: #fff;
     display: inline-block;
     font-size: 10pt;
-    margin: 15px auto;
+    margin-top: 15px;
     padding: 0px 7px 0px;
     text-align: center;
     text-decoration: none;
@@ -340,6 +340,19 @@ nav h1 a {
     text-align: center;
     padding: 4px;
     font-size: 4vh;
+}
+
+
+.fav-button{
+    background-color: orange;
+    border-bottom: 3px solid #eee;
+    color: #fff;
+    display: inline-block;
+    font-size: 10pt;
+    padding: 0px 7px 0px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
 }
 
 #reviews-container>h3 {
